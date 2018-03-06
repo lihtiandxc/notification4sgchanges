@@ -12,7 +12,7 @@ resource "aws_sns_topic" "management" {
 }
 
 module "sns_topic_arn" {
-  sns_topic_arn = ${aws_sns_topic.management.id}
+  sns_topic_arn = "${aws_sns_topic.management.id}"
 }
 
 locals {
