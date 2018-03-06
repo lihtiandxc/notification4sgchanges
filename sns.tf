@@ -13,7 +13,7 @@ variable "sns_disp" {
 #}
 
 resource "aws_sns_topic" "management" {
-  name         = "${var.name["sns_mng"]}"
+  name         = "${var.sns_disp["sns_mng"]}"
   display_name = "${var.sns_disp["sns_mng"]}"
   provider     = "aws.virginia"
 
