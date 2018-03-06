@@ -5,13 +5,12 @@ variable "sns_disp" {
   }
 }
 
-variable "commands" {
-  default {
-    local-exec01  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-    local-exec02  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
-  }
-
-}
+#variable "commands" {
+#  default {
+#    local-exec01  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+#    local-exec02  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+#  }
+#}
 
 resource "aws_sns_topic" "management" {
   name         = "${var.name["sns_mng"]}"
