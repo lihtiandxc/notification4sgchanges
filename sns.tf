@@ -12,13 +12,13 @@ resource "aws_sns_topic" "management" {
 }
 
 locals {
-  local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  #local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+  fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+  dxc_email_endpoint  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 }
 
-resource "null_resource" "subscription" {
+resource "null_resource" "sns_email_subscription" {
   provisioner "local-exec" {
-    command = "${local.local-exec01}"
+    command = "${local.fr_email_endpoint} ; ${local.dxc_email_endpoint}"
   }
 
 }
