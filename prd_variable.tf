@@ -4,6 +4,5 @@ provider "aws" {
 }
 
 variable "region" {
-  description = "virginia"
   default     = "us-east-1"
 }
