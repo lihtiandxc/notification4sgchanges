@@ -6,8 +6,8 @@ variable "sns_disp" {
 }
 
 locals {
-  local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+  local-exec01  = "aws sns subscribe --topic-arn ${data.aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+  #local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 }
 #variable "commands" {
 #  default {
@@ -28,6 +28,9 @@ resource "aws_sns_topic" "management" {
   }
 }
 
+data "aws_sns_topic" "management" {
+  name = "${aws_sns_topic.management.name}"
+}
 
 #aws cli create new subscription
 
