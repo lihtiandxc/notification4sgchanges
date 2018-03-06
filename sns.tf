@@ -24,7 +24,7 @@ resource "aws_sns_topic" "management" {
   provisioner "local-exec" {
     #command = "${var.command["local-exec01"]}"
     #command = "${var.command["local-exec02"]}"
-    command = "${local.local-exec01};${local.local-exec02}"
+    command = "${local.local-exec01}"
   }
 }
 
