@@ -7,7 +7,7 @@ variable "sns_disp" {
 
 locals {
   local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxcr-aism-mailing"]}"
+  local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 }
 #variable "commands" {
 #  default {
