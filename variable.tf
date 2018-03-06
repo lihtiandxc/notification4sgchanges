@@ -70,7 +70,7 @@ variable "name" {
     iam_role_lambda_notify_sg_event   = "mng01-lambda-account-sg-monitor"
     iam_policy_lambda_notify_sg_event = "mng01-lambda-account-sg-monitor-sns"
     cw_event_account_notify_sg_event = "mng01-account-notify-sg-event"
-    fr-aism-mailing       = "lih-tian.lim@dxc.com"
+    fr-aism-mailing       = "lih-tian.lim@gmail.com"
     dxc-aism-mailing      = "lih-tian.lim@hpe.com"
     
   }
