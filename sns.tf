@@ -12,7 +12,7 @@ resource "aws_sns_topic" "sg_event" {
 }
 
 #locals being used to replace Variable
-#due to variable not able to accept interpolation, this making code hardly maintenance
+#due to variable not able to accept interpolation, this making code hardly maintain
 #locals accept interpolation, so the it is reusable and accept references value
 locals {
   fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["fr_aism_mailing"]}"
