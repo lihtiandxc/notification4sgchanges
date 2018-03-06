@@ -1,13 +1,13 @@
 # for AccountPF notification
 variable "sns_disp" {
   default {
-    sns_mng = "mng01accountnotifysgeventSNS"
+    sns_account_sg_event = "mng01accountnotifysgeventSNS"
   }
 }
 
 resource "aws_sns_topic" "sg_event" {
-  name         = "${var.name["sns_mng"]}"
-  display_name = "${var.sns_disp["sns_mng"]}"
+  name         = "${var.name["sns_account_sg_event"]}"
+  display_name = "${var.sns_disp["sns_account_sg_event"]}"
   provider     = "aws.virginia"
 }
 
@@ -15,8 +15,8 @@ resource "aws_sns_topic" "sg_event" {
 #due to variable not able to accept interpolation, this making code hardly maintenance
 #locals accept interpolation, so the it is reusable and accept references value
 locals {
-  fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  dxc_email_endpoint  = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+  fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["fr_aism_mailing"]}"
+  dxc_email_endpoint  = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["dxc_aism_mailing"]}"
 }
 
 #null_resource used for local aws cli command
