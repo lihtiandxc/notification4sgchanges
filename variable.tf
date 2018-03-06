@@ -98,18 +98,6 @@ variable "domain" {
   }
 }
 
-data "aws_route53_zone" "zone_orgfr" {
-  name = "${var.domain["zone_orgfr"]}"
-}
-
-data "aws_route53_zone" "zone_fr" {
-  name = "${var.domain["zone_fr"]}"
-}
-
-data "aws_route53_zone" "zone_api" {
-  name = "${var.domain["zone_api"]}"
-}
-
 variable "mysql_master" {
   default = {
     storage            = 50
