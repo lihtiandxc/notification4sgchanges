@@ -11,12 +11,8 @@ resource "aws_sns_topic" "management" {
   provider     = "aws.virginia"
 }
 
-module "sns_topic_arn" {
-  sns_topic_arn = "${aws_sns_topic.management.id}"
-}
-
 locals {
-  local-exec01  = "aws sns subscribe --topic-arn ${module.sns_topic_arn.sns_topic_arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+  local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
   #local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 }
 
