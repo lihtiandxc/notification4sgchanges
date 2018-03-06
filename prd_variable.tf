@@ -1,4 +1,5 @@
 provider "aws" {
+  alias  = "virginia"
   region = "${var.region}"
 }
 
