@@ -5,10 +5,14 @@ variable "sns_disp" {
   }
 }
 
+locals {
+  local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.managemetn.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+  local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.managemetn.arn} --protocol email --notification-endpoint ${var.name["dxcr-aism-mailing"]}"
+}
 #variable "commands" {
 #  default {
-#    local-exec01  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-#    local-exec02  = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+#    local-exec01  = "aws sns subscribe --topic-arn ${aws_sns_topic.managemetn.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+#    local-exec02  = "aws sns subscribe --topic-arn ${aws_sns_topic.managemetn.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 #  }
 #}
 
@@ -18,10 +22,9 @@ resource "aws_sns_topic" "management" {
   provider     = "aws.virginia"
 
   provisioner "local-exec" {
-    command = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]};
-               aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
     #command = "${var.command["local-exec01"]}"
     #command = "${var.command["local-exec02"]}"
+    command = "${local.local-exec01};${local.local-exec02}"
   }
 }
 
