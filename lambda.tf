@@ -1,14 +1,14 @@
-resource "archive_file" "mng" {
+resource "archive_file" "sg_event" {
   type        = "zip"
-  source_file = "code/notification4SGChanges/lambda_function.py"
-  output_path = "./lambda.zip"
+  source_file = "function/lambda_function.py"
+  output_path = "./lambda_function.zip"
 }
 
 resource "aws_lambda_function" "notify_sg_event" {
-  filename      = "${archive_file.mng.output_path}"
+  filename      = "${archive_file.sg_event.output_path}"
   function_name = "${var.name["lambda_notify_sg_event"]}"
-  role          = "${aws_iam_role.lambda.arn}"
-  handler       = "index.handler"
+  role          = "${aws_iam_role.lambda_notify_sg_event.arn}"
+  handler       = "lambda_function.lambda_handler"
   runtime       = "${var.lambda_python["runtime"]}"
   timeout       = "300"
 
@@ -16,11 +16,11 @@ resource "aws_lambda_function" "notify_sg_event" {
     variables = {
       service   = "${var.tags["service"]}"
       env       = "${var.tags["env"]}"
-      sns_topic = "${aws_sns.topic.mng}"
-
+      global_sns_topic_arn = "${aws_sns_topic.sg_event.arn}"
+      global_accountpf_sg_list = "sg-48aa5a3e,sg-9ba7c2ec,sg-352d1542"
+      global_accountpf_sg_name = "Prod_sg_mante,Monitor,Stag_account"
     }
   }
-}
 
   tags {
     Name = "${var.name["lambda_notify_sg_event"]}"
