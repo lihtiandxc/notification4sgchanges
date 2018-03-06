@@ -19,7 +19,8 @@ resource "aws_sns_topic" "management" {
   provider     = "aws.virginia"
 
   provisioner "local-exec" {
-    command = "${var.command["local-exec01"]}"
+    command = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+    #command = "${var.command["local-exec01"]}"
     #command = "${var.command["local-exec02"]}"
   }
 }
