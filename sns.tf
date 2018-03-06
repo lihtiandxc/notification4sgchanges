@@ -1,37 +1,33 @@
 # for AccountPF notification
 variable "sns_disp" {
   default {
-    sns_mng = "AccountPF_Notification"
+    sns_mng = "mng01accountnotifysgeventSNS"
   }
 }
 
-resource "aws_sns_topic" "management" {
-  name         = "${var.sns_disp["sns_mng"]}"
+resource "aws_sns_topic" "sg_event" {
+  name         = "${var.name["sns_mng"]}"
   display_name = "${var.sns_disp["sns_mng"]}"
   provider     = "aws.virginia"
 }
 
+#locals being used to replace Variable
+#due to variable not able to accept interpolation, this making code hardly maintenance
+#locals accept interpolation, so the it is reusable and accept references value
 locals {
-  fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  dxc_email_endpoint  = "aws sns subscribe --topic-arn ${aws_sns_topic.management.id} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
+  fr_email_endpoint   = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
+  dxc_email_endpoint  = "aws sns subscribe --topic-arn ${aws_sns_topic.sg_event.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]}"
 }
 
+#null_resource used for local aws cli command
+#due to the email endpoint need confirmation, terraform does not support email endpoint in sns_topic_subcription resource
+#workaround is using provisioner with local-exec method
 resource "null_resource" "sns_email_subscription" {
   provisioner "local-exec" {
     command = "${local.fr_email_endpoint} ; ${local.dxc_email_endpoint}"
   }
-
 }
 
-#workable
-/*
-resource "aws_sns_topic" "management" {
-  name         = "${var.sns_disp["sns_mng"]}"
-  display_name = "${var.sns_disp["sns_mng"]}"
-  provider     = "aws.virginia"
-
-  provisioner "local-exec" {
-    command = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["dxc-aism-mailing"]};aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.name["fr-aism-mailing"]}"
-  }
-}
-*/
+#provisioner of local-exec can be written in the resource "aws_sns_topic" "sg_event{} code block
+#however, it returns error with cycle msg when doing resource reference such as ${aws_sns_topic.sg_event.arn}
+#workaround is to use null_resource to carry the provisioner seperately
