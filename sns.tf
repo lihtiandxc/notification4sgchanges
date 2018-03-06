@@ -19,7 +19,8 @@ resource "aws_sns_topic" "management" {
   provider     = "aws.virginia"
 
   provisioner "local-exec" {
-    command = "local-exec01 ; local-exec02 "
+    command = "${var.command["local-exec01"]}"
+    command = "${var.command["local-exec02"}}"
   }
 }
 
