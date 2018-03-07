@@ -1,8 +1,8 @@
 variable "function" {
   default {
-    sg_event = "function_sg_event"
+      sg_event = "function_sg_event"
     }
-  }
+}
 
 resource "archive_file" "sg_event" {
   type        = "zip"
