@@ -30,6 +30,7 @@ variable "name" {
     fr_aism_mailing       = "lihtian@gmail.com"
     dxc_aism_mailing      = "lih-tian.lim@hpe.com"
     sns_account_sg_event  = "mng01-vir-notification-account-fr"
+    function_sg_event     = "function_sg_event"
     
   }
 }
@@ -39,3 +40,6 @@ variable "lambda_python" {
     runtime = "python3.6"
   }
 }
+
+
+
