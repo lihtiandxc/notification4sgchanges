@@ -1,5 +1,5 @@
-resource "aws_iam_role" "lambda_notify_sg_event" {
-  name = "${var.name["iam_role_lambda_notify_sg_event"]}"
+resource "aws_iam_role" "lambda_notify_security_event" {
+  name = "${var.name["iam_role_lambda_notify_security_event"]}"
 
   assume_role_policy = <<EOF
 {
@@ -18,13 +18,13 @@ resource "aws_iam_role" "lambda_notify_sg_event" {
 EOF
 }
 
-resource "aws_iam_policy" "lambda_sg_monitor_sns" {
-  name   = "${var.name["iam_policy_lambda_notify_sg_event"]}"
+resource "aws_iam_policy" "lambda_security_monitor_sns" {
+  name   = "${var.name["iam_policy_lambda_notify_security_event"]}"
   #role   = "${aws_iam_role.lambda_notify_sg_event.id}"
-  policy = "${data.template_file.lambda_role_notify_sg_event.rendered}"
+  policy = "${data.template_file.lambda_role_notify_security_event.rendered}"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_sg_monitor_sns" {
-  role       = "${aws_iam_role.lambda_notify_sg_event.name}"
-  policy_arn = "${aws_iam_policy.lambda_sg_monitor_sns.arn}"
+  role       = "${aws_iam_role.lambda_notify_security_event.name}"
+  policy_arn = "${aws_iam_policy.lambda_security_monitor_sns.arn}"
 }
