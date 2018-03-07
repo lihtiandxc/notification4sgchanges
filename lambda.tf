@@ -1,14 +1,20 @@
+variable "function" {
+  default {
+    sg_event = "function_sg_event"
+    }
+  }
+
 resource "archive_file" "sg_event" {
   type        = "zip"
-  source_file = "function/lambda_function.py"
-  output_path = "./lambda_function.zip"
+  source_file = "function/${var.function["sg_event"]}.py"
+  output_path = "./${var.function["sg_event"]}.zip"
 }
 
 resource "aws_lambda_function" "notify_sg_event" {
   filename      = "${archive_file.sg_event.output_path}"
   function_name = "${var.name["lambda_notify_sg_event"]}"
   role          = "${aws_iam_role.lambda_notify_sg_event.arn}"
-  handler       = "lambda_function.lambda_handler"
+  handler       = "${var.function["sg_event"]}.lambda_handler"
   runtime       = "${var.lambda_python["runtime"]}"
   timeout       = "300"
 
