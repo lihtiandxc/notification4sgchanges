@@ -7,9 +7,11 @@ import os
 #str_asg_name = 'limliht-asg,limliht2-asg' #simulate global var in lambda
 #global_asg_name = str_asg_name.split(',')
 service_tag_name = 'Service'
-service_tag = 'account'
+#service_tag = 'account'
+service_tag = os.environ['service']
 env_tag_name = 'Env'
-env_tag = 'Production'
+#env_tag = 'Production'
+env_tag = os.environ['env']
 #country_tag_name = 'Country'
 #country_tag_value = 'US'
 accountpf_sg_list = os.environ['global_accountpf_sg_list'].split(',')
